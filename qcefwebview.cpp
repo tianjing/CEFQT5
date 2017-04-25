@@ -2,7 +2,7 @@
 #include "qcefwebview.h"
 #include "QCefClientHandler.h"
 #include "qcefmessageevent.h"
-
+#include <QDebug>
 extern CefRefPtr<QCefClientHandler> g_handler;
 
 const QString QCefWebView::kUrlBlank = "https://www.baidu.com";
@@ -15,6 +15,7 @@ QCefWebView::QCefWebView(QWidget *parent) :
 {
 	setAttribute(Qt::WA_NativeWindow, true);
 	setAttribute(Qt::WA_DontCreateNativeAncestors, true);
+	qDebug() << "fdasfdsa";
 }
 
 QCefWebView::~QCefWebView()
@@ -145,11 +146,13 @@ void QCefWebView::customEvent(QEvent* e)
 
 void QCefWebView::OnAddressChange(const QString& url)
 {
+	qDebug() << "OnAddressChange";
 	emit urlChanged(QUrl(url));
 }
 
 void QCefWebView::OnTitleChange(const QString& title)
 {
+	qDebug() << "OnTitleChange";
 	emit titleChanged(title);
 }
 
@@ -186,6 +189,7 @@ void QCefWebView::OnAfterCreated()
 
 void QCefWebView::OnMessageEvent(QCefMessageEvent* e)
 {
+	qDebug()<< e->name();
 	QCoreApplication::postEvent(this, e, Qt::HighEventPriority);
 }
 
@@ -224,6 +228,7 @@ bool QCefWebView::CreateBrowser(const QSize& size)
 								  CefString(url.toStdWString()),
 								  browserSettings,
 								  nullptr);
+
 	browserState_ = kCreating;
 	mutex_.unlock();
 	
@@ -275,4 +280,10 @@ bool QCefWebView::BrowserLoadUrl(const QUrl& url)
 		return true;
 	}
 	return false;
+}
+void QCefWebView::OnGetResource(CefRefPtr<CefBrowser> browser,
+	CefRefPtr<CefFrame> frame,
+	CefRefPtr<CefRequest> request) {
+	qDebug() << "OnGetResourceHandler";
+	qDebug() << QString::fromStdWString(request->GetURL().ToWString());
 }

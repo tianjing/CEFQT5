@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "QCefClientHandler.h"
 #include "qcefmessageevent.h"
-
+#include <QDebug>
 int QCefClientHandler::browserCount_ = 0;
 
 QCefClientHandler::QCefClientHandler() :
@@ -19,6 +19,7 @@ QCefClientHandler::~QCefClientHandler()
 
 void QCefClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
+	qDebug() << "22222222222222222";
 	CEF_REQUIRE_UI_THREAD();
 
 	if (!browser_.get()) {
@@ -124,4 +125,17 @@ void QCefClientHandler::CloseAllBrowsers(bool force_close)
 		// Request that the main browser close.
 		browser_->GetHost()->CloseBrowser(force_close);
 	}
+}
+CefRefPtr<CefResourceHandler> QCefClientHandler::GetResourceHandler(
+	CefRefPtr<CefBrowser> browser,
+	CefRefPtr<CefFrame> frame,
+	CefRefPtr<CefRequest> request) {
+	//CEF_REQUIRE_UI_THREAD();
+	qDebug() << "f321321";
+	if (browserId_ == browser->GetIdentifier()) {
+		if (listener_) {
+			listener_->OnGetResource(browser, frame, request);
+		}
+	}
+	return NULL;
 }

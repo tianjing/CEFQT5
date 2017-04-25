@@ -6,7 +6,8 @@ class QCefClientHandler :
 	public CefClient,
 	public CefDisplayHandler,
 	public CefLifeSpanHandler,
-	public CefLoadHandler
+	public CefLoadHandler,
+	public CefRequestHandler
 {
 public:
 	class Listener
@@ -20,6 +21,9 @@ public:
 		virtual void SetNavState(bool canGoBack, bool canGoForward) = 0;
 		virtual void OnAfterCreated() = 0;
 		virtual void OnMessageEvent(QCefMessageEvent * e) = 0;
+		virtual void OnGetResource(CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefFrame> frame,
+			CefRefPtr<CefRequest> request) = 0;
 	};
 
 	QCefClientHandler();
@@ -35,7 +39,12 @@ public:
 	virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE{
 		return this;
 	}
-	
+	// CefRequestHandler methods
+	virtual CefRefPtr<CefRequestHandler> GetRequestHandler() OVERRIDE {
+		return this;
+	}
+
+
 // overridden methods
 public:
 	virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
@@ -48,7 +57,10 @@ public:
 							 const CefString& failedUrl) OVERRIDE;
 	
 	void CloseAllBrowsers(bool force_close);
-
+	CefRefPtr<CefResourceHandler> QCefClientHandler::GetResourceHandler(
+		CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		CefRefPtr<CefRequest> request) OVERRIDE;
 // getters and setters
 public:
 

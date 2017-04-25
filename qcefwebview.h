@@ -53,7 +53,9 @@ protected:
 	virtual void SetNavState(bool canGoBack, bool canGoForward) override;
 	virtual void OnAfterCreated() override;
 	virtual void OnMessageEvent(QCefMessageEvent * e) override;
-
+	virtual void OnGetResource(CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		CefRefPtr<CefRequest> request);
 private:
 
 	bool CreateBrowser(const QSize & size);

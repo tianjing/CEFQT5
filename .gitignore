@@ -10,3 +10,15 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/Example/Release
+/Example/Win32
+/ipch
+/Example/Debug
+/QCefWebView/Debug
+/QCefWebView/Release
+/Win32/Debug/.cache
+/Win32/Release/.cache
+/Win32/Debug/libcef.dll
+/Example.VC.db
+/Example.VC.VC.opendb
+/.vs/Example/v14/.suo
