@@ -27,6 +27,7 @@ int RunCefSubprocess(int & argc, char ** argv)
 
 int main(int argc, char *argv[])
 {
+	
 	if (IsSubprocess(argc, argv)) {
 		std::cout << "subprocess" << std::endl;
 		return RunCefSubprocess(argc, argv);
@@ -42,8 +43,8 @@ int main(int argc, char *argv[])
 		Example w;
 		w.resize(1024, 768);
 
-		QCefWebView * cefWebView = new QCefWebView(&w);
-		w.setCentralWidget(cefWebView);
+		//QCefWebView * cefWebView = new QCefWebView(&w);
+		//w.setCentralWidget(cefWebView);
 
 		w.show();
 

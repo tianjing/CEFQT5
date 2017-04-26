@@ -34,6 +34,12 @@
       <Extensions>*</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
+    <Filter Include="QHandlers">
+      <UniqueIdentifier>{64f56958-2945-4f85-b2b0-b06405cee754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Delegate">
+      <UniqueIdentifier>{baf37a9c-9f2a-4ef9-b754-c4433269a5ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,12 +54,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_qcefwebviewplugin.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_qcefwebview.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_qcefwebview.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="..\QCefClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,10 +63,19 @@
     <ClCompile Include="..\QCefClientHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\qcefmessageevent.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_QCefWebView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QCefWebView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\QCefMessageEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\qcefwebview.cpp">
+    <ClCompile Include="..\QCefResourceEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\QCefWebView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,18 +89,30 @@
     <ClInclude Include="..\QCefClientApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\QCefMessageEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\QCefResourceEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\QCefResourceHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\QCefClientHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\qcefmessageevent.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\QHandlers\QCetRequestHandler.h">
+      <Filter>QHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Delegate\DelegateExt.h">
+      <Filter>Delegate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qcefwebviewplugin.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\qcefwebview.h">
+    <CustomBuild Include="..\QCefWebView.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

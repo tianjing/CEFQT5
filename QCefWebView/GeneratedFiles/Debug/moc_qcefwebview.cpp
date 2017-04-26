@@ -1,5 +1,5 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'qcefwebview.h'
+** Meta object code from reading C++ file 'QCefWebView.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.1)
 **
@@ -7,11 +7,11 @@
 *****************************************************************************/
 
 #include "stdafx.h"
-#include "../../../qcefwebview.h"
+#include "../../../QCefWebView.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'qcefwebview.h' doesn't include <QObject>."
+#error "The header file 'QCefWebView.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.7.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QCefWebView_t {
-    QByteArrayData data[16];
-    char stringdata0[139];
+    QByteArrayData data[20];
+    char stringdata0[187];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,16 +42,21 @@ QT_MOC_LITERAL(8, 72, 2), // "ok"
 QT_MOC_LITERAL(9, 75, 15), // "navStateChanged"
 QT_MOC_LITERAL(10, 91, 9), // "canGoBack"
 QT_MOC_LITERAL(11, 101, 12), // "canGoForward"
-QT_MOC_LITERAL(12, 114, 4), // "back"
-QT_MOC_LITERAL(13, 119, 7), // "forward"
-QT_MOC_LITERAL(14, 127, 6), // "reload"
-QT_MOC_LITERAL(15, 134, 4) // "stop"
+QT_MOC_LITERAL(12, 114, 11), // "getResource"
+QT_MOC_LITERAL(13, 126, 18), // "QCefResourceEvent&"
+QT_MOC_LITERAL(14, 145, 1), // "e"
+QT_MOC_LITERAL(15, 147, 4), // "back"
+QT_MOC_LITERAL(16, 152, 7), // "forward"
+QT_MOC_LITERAL(17, 160, 6), // "reload"
+QT_MOC_LITERAL(18, 167, 4), // "stop"
+QT_MOC_LITERAL(19, 172, 14) // "RequestHandler"
 
     },
     "QCefWebView\0titleChanged\0\0title\0"
     "urlChanged\0url\0loadStarted\0loadFinished\0"
     "ok\0navStateChanged\0canGoBack\0canGoForward\0"
-    "back\0forward\0reload\0stop"
+    "getResource\0QCefResourceEvent&\0e\0back\0"
+    "forward\0reload\0stop\0RequestHandler"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,25 +66,27 @@ static const uint qt_meta_data_QCefWebView[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   59,    2, 0x06 /* Public */,
-       4,    1,   62,    2, 0x06 /* Public */,
-       6,    0,   65,    2, 0x06 /* Public */,
-       7,    1,   66,    2, 0x06 /* Public */,
-       9,    2,   69,    2, 0x06 /* Public */,
+       1,    1,   69,    2, 0x06 /* Public */,
+       4,    1,   72,    2, 0x06 /* Public */,
+       6,    0,   75,    2, 0x06 /* Public */,
+       7,    1,   76,    2, 0x06 /* Public */,
+       9,    2,   79,    2, 0x06 /* Public */,
+      12,    1,   84,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      12,    0,   74,    2, 0x0a /* Public */,
-      13,    0,   75,    2, 0x0a /* Public */,
-      14,    0,   76,    2, 0x0a /* Public */,
-      15,    0,   77,    2, 0x0a /* Public */,
+      15,    0,   87,    2, 0x0a /* Public */,
+      16,    0,   88,    2, 0x0a /* Public */,
+      17,    0,   89,    2, 0x0a /* Public */,
+      18,    0,   90,    2, 0x0a /* Public */,
+      19,    0,   91,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -87,8 +94,10 @@ static const uint qt_meta_data_QCefWebView[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,    8,
     QMetaType::Void, QMetaType::Bool, QMetaType::Bool,   10,   11,
+    QMetaType::Void, 0x80000000 | 13,   14,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -108,10 +117,12 @@ void QCefWebView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 2: _t->loadStarted(); break;
         case 3: _t->loadFinished((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->navStateChanged((*reinterpret_cast< bool(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 5: _t->back(); break;
-        case 6: _t->forward(); break;
-        case 7: _t->reload(); break;
-        case 8: _t->stop(); break;
+        case 5: _t->getResource((*reinterpret_cast< QCefResourceEvent(*)>(_a[1]))); break;
+        case 6: _t->back(); break;
+        case 7: _t->forward(); break;
+        case 8: _t->reload(); break;
+        case 9: _t->stop(); break;
+        case 10: _t->RequestHandler(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -152,6 +163,13 @@ void QCefWebView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 return;
             }
         }
+        {
+            typedef void (QCefWebView::*_t)(QCefResourceEvent & );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QCefWebView::getResource)) {
+                *result = 5;
+                return;
+            }
+        }
     }
 }
 
@@ -182,13 +200,13 @@ int QCefWebView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }
@@ -225,5 +243,12 @@ void QCefWebView::navStateChanged(bool _t1, bool _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+
+// SIGNAL 5
+void QCefWebView::getResource(QCefResourceEvent & _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 QT_END_MOC_NAMESPACE

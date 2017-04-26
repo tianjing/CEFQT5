@@ -1,8 +1,9 @@
 #pragma once
 
 #include "qcefmessageevent.h"
-
-class QCefClientHandler :
+#include "qcefresourceevent.h"
+#include "QHandlers\QCetRequestHandler.h"
+class QCefWebView_EXPORT QCefClientHandler :
 	public CefClient,
 	public CefDisplayHandler,
 	public CefLifeSpanHandler,
@@ -21,9 +22,7 @@ public:
 		virtual void SetNavState(bool canGoBack, bool canGoForward) = 0;
 		virtual void OnAfterCreated() = 0;
 		virtual void OnMessageEvent(QCefMessageEvent * e) = 0;
-		virtual void OnGetResource(CefRefPtr<CefBrowser> browser,
-			CefRefPtr<CefFrame> frame,
-			CefRefPtr<CefRequest> request) = 0;
+		virtual QCetRequestHandler& RequestHandler()=0;
 	};
 
 	QCefClientHandler();
@@ -44,7 +43,25 @@ public:
 		return this;
 	}
 
+	virtual CefRefPtr<CefResourceHandler> GetResourceHandler(
+		CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		CefRefPtr<CefRequest> request)OVERRIDE {
+		if (listener_)
+		{
+			QString url = QString::fromStdWString(request->GetURL().ToWString());
+			QGetResourceEventArgs args =QGetResourceEventArgs(url);
 
+			listener_->RequestHandler().GetResource(args);
+			if (args.UseHandler)
+			{
+				qDebug() << "listener_ getResourceHandler";
+				                                          
+				return CefRefPtr<QCefResourceHandler>(new QCefResourceHandler(url, args.getResourceHandler()));
+			}
+		}
+		return NULL;
+	}
 // overridden methods
 public:
 	virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
@@ -57,10 +74,7 @@ public:
 							 const CefString& failedUrl) OVERRIDE;
 	
 	void CloseAllBrowsers(bool force_close);
-	CefRefPtr<CefResourceHandler> QCefClientHandler::GetResourceHandler(
-		CefRefPtr<CefBrowser> browser,
-		CefRefPtr<CefFrame> frame,
-		CefRefPtr<CefRequest> request) OVERRIDE;
+
 // getters and setters
 public:
 

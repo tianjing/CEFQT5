@@ -126,16 +126,4 @@ void QCefClientHandler::CloseAllBrowsers(bool force_close)
 		browser_->GetHost()->CloseBrowser(force_close);
 	}
 }
-CefRefPtr<CefResourceHandler> QCefClientHandler::GetResourceHandler(
-	CefRefPtr<CefBrowser> browser,
-	CefRefPtr<CefFrame> frame,
-	CefRefPtr<CefRequest> request) {
-	//CEF_REQUIRE_UI_THREAD();
-	qDebug() << "f321321";
-	if (browserId_ == browser->GetIdentifier()) {
-		if (listener_) {
-			listener_->OnGetResource(browser, frame, request);
-		}
-	}
-	return NULL;
-}
+

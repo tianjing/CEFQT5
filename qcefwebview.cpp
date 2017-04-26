@@ -5,7 +5,7 @@
 #include <QDebug>
 extern CefRefPtr<QCefClientHandler> g_handler;
 
-const QString QCefWebView::kUrlBlank = "https://www.baidu.com";
+const QString QCefWebView::kUrlBlank = "http://www.baidu.com";
 
 QCefWebView::QCefWebView(QWidget *parent) : 
 	QWidget(parent),
@@ -15,7 +15,9 @@ QCefWebView::QCefWebView(QWidget *parent) :
 {
 	setAttribute(Qt::WA_NativeWindow, true);
 	setAttribute(Qt::WA_DontCreateNativeAncestors, true);
+	requesthandler_ = QCetRequestHandler();
 	qDebug() << "fdasfdsa";
+
 }
 
 QCefWebView::~QCefWebView()
@@ -281,9 +283,7 @@ bool QCefWebView::BrowserLoadUrl(const QUrl& url)
 	}
 	return false;
 }
-void QCefWebView::OnGetResource(CefRefPtr<CefBrowser> browser,
-	CefRefPtr<CefFrame> frame,
-	CefRefPtr<CefRequest> request) {
-	qDebug() << "OnGetResourceHandler";
-	qDebug() << QString::fromStdWString(request->GetURL().ToWString());
+QCetRequestHandler& QCefWebView::RequestHandler()
+{
+	return requesthandler_;
 }

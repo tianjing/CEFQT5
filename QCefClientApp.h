@@ -12,7 +12,6 @@ public:
 
 	// CefBrowserProcessHandler methods:
 	virtual void OnContextInitialized() OVERRIDE;
-
 private:
 	IMPLEMENT_REFCOUNTING(QCefClientApp);
 };

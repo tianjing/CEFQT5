@@ -3,7 +3,7 @@
 
 #include "qcefclienthandler.h"
 #include "qcefmessageevent.h"
-
+#include "QHandlers\QCetRequestHandler.h"
 class QCefWebView_EXPORT QCefWebView :
 	public QWidget,
 	public QCefClientHandler::Listener
@@ -32,14 +32,14 @@ public slots:
 	void forward();
 	void reload();
 	void stop();
-
+	virtual QCetRequestHandler& RequestHandler()override;
 signals:
 	void titleChanged(const QString & title);
 	void urlChanged(const QUrl & url);
 	void loadStarted();
 	void loadFinished(bool ok);
-
 	void navStateChanged(bool canGoBack, bool canGoForward);
+	void getResource(QCefResourceEvent & e);
 
 protected:
 	virtual void resizeEvent(QResizeEvent * event) override;
@@ -53,16 +53,15 @@ protected:
 	virtual void SetNavState(bool canGoBack, bool canGoForward) override;
 	virtual void OnAfterCreated() override;
 	virtual void OnMessageEvent(QCefMessageEvent * e) override;
-	virtual void OnGetResource(CefRefPtr<CefBrowser> browser,
-		CefRefPtr<CefFrame> frame,
-		CefRefPtr<CefRequest> request);
-private:
 
+private:
+	void SetupUi();
 	bool CreateBrowser(const QSize & size);
 	CefRefPtr<CefBrowser> GetBrowser() const;
 	void ResizeBrowser(const QSize & size);
 	bool BrowserLoadUrl(const QUrl & url);
 
+	QCetRequestHandler requesthandler_;
 	BrowserState browserState_;
 	bool needResize_;
 	bool needLoad_;

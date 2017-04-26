@@ -3,7 +3,7 @@
 
 #include <QEvent>
 
-class QCefMessageEvent : public QEvent
+class QCefWebView_EXPORT QCefMessageEvent : public QEvent
 {
 public:
 	static const QEvent::Type MessageEventType;
