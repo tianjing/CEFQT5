@@ -18,7 +18,7 @@ public:
 		CefRefPtr<CefCallback> callback)OVERRIDE {
 		qDebug() << "ProcessRequest";
 		QProcessRequestEventArgs args = QProcessRequestEventArgs(QString::fromStdWString(request->GetURL().c_str()));
-		ResourceHandler_->ProcessRequest(args);
+		ResourceHandler_->ProcessRequestEvent(args);
 		if (args.UseContinue) {
 			callback->Continue();
 		}
@@ -35,7 +35,7 @@ public:
 		CefString& redirectUrl) OVERRIDE {
 		qDebug() << "GetResponseHeaders";
 		QGetResponseHeadersEventArgs args = QGetResponseHeadersEventArgs(url_);
-		ResourceHandler_->GetResponseHeaders(args);
+		ResourceHandler_->GetResponseHeadersEvent(args);
 		if ("" != args.MimeType)
 		{
 			response->SetMimeType(CefString(args.MimeType.toStdWString()));
@@ -64,7 +64,7 @@ public:
 		
 		qDebug() << "ReadResponse:"<<url_; 
 		QReadResponseEventArgs args = QReadResponseEventArgs(url_);
-		ResourceHandler_->ReadResponse(args);
+		ResourceHandler_->ReadResponseEvent(args);
 
 		if (args.UseContinue) {
 			callback->Continue();

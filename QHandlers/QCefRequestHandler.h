@@ -48,9 +48,9 @@ public:
 	 ~QCefGetResourceHandler() {
 		 qDebug() << "~QCefGetResourceHandler";
 	 }
-	 CEvent<QProcessRequestEventArgs&> ProcessRequest = CEvent<QProcessRequestEventArgs&>();
-	 CEvent<QGetResponseHeadersEventArgs&> GetResponseHeaders = CEvent<QGetResponseHeadersEventArgs&>();
-	 CEvent<QReadResponseEventArgs&> ReadResponse = CEvent<QReadResponseEventArgs&>();
+	 CEvent<QProcessRequestEventArgs&> ProcessRequestEvent = CEvent<QProcessRequestEventArgs&>();
+	 CEvent<QGetResponseHeadersEventArgs&> GetResponseHeadersEvent = CEvent<QGetResponseHeadersEventArgs&>();
+	 CEvent<QReadResponseEventArgs&> ReadResponseEvent = CEvent<QReadResponseEventArgs&>();
  };
 
  class QGefResourceEventArgs : public CEventArgs
@@ -78,5 +78,5 @@ public:
 
  class QCefRequestHandler :public CListener {
  public:
-	 CEvent<QGefResourceEventArgs&> GetResource;
+	 CEvent<QGefResourceEventArgs&> GetResourceEvent;
  };

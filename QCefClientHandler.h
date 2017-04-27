@@ -53,7 +53,7 @@ public:
 			QString url = QString::fromStdWString(request->GetURL().ToWString());
 			QGefResourceEventArgs args =QGefResourceEventArgs(url);
 
-			listener_->RequestHandler().GetResource(args);
+			listener_->RequestHandler().GetResourceEvent(args);
 			if (args.UseHandler)
 			{
 				qDebug() << "listener_ getResourceHandler";

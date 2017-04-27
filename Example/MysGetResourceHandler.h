@@ -9,16 +9,16 @@ public:
 		angetGetResponseHeaders_ = new CListenerAgent<MysGetResourceHandler, QGetResponseHeadersEventArgs&>(this, &MysGetResourceHandler::OnGetResponseHeaders);
 
 
-		this->ReadResponse += angetReadResponse_;
-		this->ProcessRequest += angetProcessReques_;
-		this->GetResponseHeaders += angetGetResponseHeaders_;
+		this->ReadResponseEvent += angetReadResponse_;
+		this->ProcessRequestEvent += angetProcessReques_;
+		this->GetResponseHeadersEvent += angetGetResponseHeaders_;
 	}
 	~MysGetResourceHandler()
 	{
 		qDebug() << "~MysGetResourceHandler()";
-		this->ReadResponse -= angetReadResponse_;
-		this->ProcessRequest -= angetProcessReques_;
-		this->GetResponseHeaders -= angetGetResponseHeaders_;
+		this->ReadResponseEvent -= angetReadResponse_;
+		this->ProcessRequestEvent -= angetProcessReques_;
+		this->GetResponseHeadersEvent -= angetGetResponseHeaders_;
 	}
 
 	CListenerAgent<MysGetResourceHandler, QReadResponseEventArgs&>*angetReadResponse_;

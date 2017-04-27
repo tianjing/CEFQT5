@@ -18,7 +18,7 @@ void Example::SetupUi() {
 	webview_ = new QCefWebView(this);
 	webview_->load(QUrl(url));
 	CListenerAgent<Example, QGefResourceEventArgs&>* agent = new CListenerAgent<Example, QGefResourceEventArgs&>(this, &Example::OnGetResource);
-	webview_->RequestHandler().GetResource += agent;
+	webview_->RequestHandler().GetResourceEvent += agent;
 	this->setCentralWidget(webview_);
 }
 void Example::OnGetResource(QGefResourceEventArgs& args)
