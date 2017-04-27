@@ -10,7 +10,8 @@ class QCefWebView_EXPORT QCefResourceHandler :public CefResourceHandler {
 public:
 	QCefResourceHandler(const QString& url,const QCefGetResourceHandler* ResourceHandler) {
 		url_ = url;
-		ResourceHandler_ = const_cast<QCefGetResourceHandler*>( ResourceHandler);
+		ResourceHandler_ = const_cast<QCefGetResourceHandler*>(ResourceHandler);
+
 	};
 	virtual ~QCefResourceHandler() { qDebug() << "·¶µÂÈø·¢´ï"; };
 	virtual bool ProcessRequest(CefRefPtr<CefRequest> request,
@@ -74,9 +75,9 @@ public:
 		}
 		if (args.ReturnValue)
 		{
-			int length = args.Data_Out.length();
-			bytes_read = length;
-			memcpy(data_out, args.Data_Out.constData(), bytes_read);
+			QByteArray bytes = args.Data_Out;
+			bytes_read = bytes.length();
+			memcpy(data_out, bytes.constData(), bytes_read);
 			return true;
 		}
 		return false;

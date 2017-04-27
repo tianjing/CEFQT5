@@ -88,7 +88,6 @@
     <ClCompile Include="..\QCefClientApp.cpp" />
     <ClCompile Include="..\QCefClientHandler.cpp" />
     <ClCompile Include="..\QCefMessageEvent.cpp" />
-    <ClCompile Include="..\QCefResourceEvent.cpp" />
     <ClCompile Include="..\QCefWebView.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_QCefWebView.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -134,7 +133,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_PLUGIN -DQT_NO_DEBUG -DNDEBUG -DQDESIGNER_EXPORT_WIDGETS -DQT_DESIGNER_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQCefWebView_LIB -D_WINDLL  "-I$(SolutionDir)\." "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtDesigner" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(SolutionDir)3rdparty\cef" "-fstdafx.h" "-f../../qcefwebviewplugin.h"</Command>
     </CustomBuild>
-    <ClInclude Include="..\QCefResourceEvent.h" />
     <ClInclude Include="..\QCefResourceHandler.h" />
     <ClInclude Include="..\QHandlers\QCefLifeSpanHandler.h" />
     <ClInclude Include="..\QHandlers\QCefDisplayHandler.h" />

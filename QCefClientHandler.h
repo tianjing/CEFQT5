@@ -1,6 +1,7 @@
 #pragma once
 
 #include "qcefmessageevent.h"
+#include "QCefResourceHandler.h"
 #include "QHandlers\QCefRequestHandler.h"
 #include "QHandlers\QCefDisplayHandler.h"
 #include "QHandlers\QCefLifeSpanHandler.h"
