@@ -101,11 +101,17 @@
     <ClInclude Include="..\QCefClientHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\QHandlers\QCetRequestHandler.h">
-      <Filter>QHandlers</Filter>
-    </ClInclude>
     <ClInclude Include="..\Delegate\DelegateExt.h">
       <Filter>Delegate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\QHandlers\QCefLifeSpanHandler.h">
+      <Filter>QHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\QHandlers\QCefDisplayHandler.h">
+      <Filter>QHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\QHandlers\QCefRequestHandler.h">
+      <Filter>QHandlers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

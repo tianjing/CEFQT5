@@ -48,6 +48,7 @@ int QCefInit(int& argc, char** argv)
 
 void QCefQuit()
 {
+	CefQuitMessageLoop();
 	CefShutdown();
 }
 

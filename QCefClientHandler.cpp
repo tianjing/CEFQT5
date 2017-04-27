@@ -19,7 +19,6 @@ QCefClientHandler::~QCefClientHandler()
 
 void QCefClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
-	qDebug() << "22222222222222222";
 	CEF_REQUIRE_UI_THREAD();
 
 	if (!browser_.get()) {
@@ -27,7 +26,7 @@ void QCefClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 		browser_ = browser;
 		browserId_ = browser->GetIdentifier();
 		if (listener_) {
-			listener_->OnAfterCreated();
+			listener_->LifeSpanHandler().AfterCreatedEvent(CEventArgs(NULL));
 		}
 	}
 	else if (browser->IsPopup()) {
@@ -46,11 +45,15 @@ bool QCefClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
 	// documentation in the CEF header for a detailed destription of this
 	// process.
 	if (browserId_ == browser->GetIdentifier()) {
+		if (listener_) {
+			listener_->LifeSpanHandler().DoCloseEvent(CEventArgs(NULL));
+		}
 		// Notify the browser that the parent window is about to close.
 		// browser->GetHost()->ParentWindowWillClose();
-
+		
 		// Set a flag to indicate that the window close should be allowed.
 		isClosing_ = true;
+
 	}
 
 	// Allow the close. For windowed browsers this will result in the OS close
@@ -64,6 +67,9 @@ void QCefClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 
 	if (browserId_ == browser->GetIdentifier()) {
 		// Free the browser pointer so that the browser can be destroyed
+		if (listener_) {
+			listener_->LifeSpanHandler().BeforeCloseEvent(CEventArgs(NULL));
+		}
 		browser_ = nullptr;
 	}
 	else if (browser->IsPopup()) {

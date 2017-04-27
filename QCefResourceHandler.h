@@ -5,21 +5,19 @@
 #include "stdafx.h"
 #include <include/wrapper/cef_resource_manager.h>
 #include <include/cef_base.h>
-#include <QHandlers\QCetRequestHandler.h>
+#include <QHandlers\QCefRequestHandler.h>
 class QCefWebView_EXPORT QCefResourceHandler :public CefResourceHandler {
 public:
-	QCefResourceHandler(const QString& url,QCefGetResourceHandler& ResourceHandler) {
+	QCefResourceHandler(const QString& url,const QCefGetResourceHandler* ResourceHandler) {
 		url_ = url;
-		ResourceHandler_.GetResponseHeaders= ResourceHandler.GetResponseHeaders;
-		ResourceHandler_.ProcessRequest= ResourceHandler.ProcessRequest;
-		ResourceHandler_.ReadResponse = ResourceHandler.ReadResponse;
+		ResourceHandler_ = const_cast<QCefGetResourceHandler*>( ResourceHandler);
 	};
 	virtual ~QCefResourceHandler() { qDebug() << "·¶µÂÈø·¢´ï"; };
 	virtual bool ProcessRequest(CefRefPtr<CefRequest> request,
 		CefRefPtr<CefCallback> callback)OVERRIDE {
 		qDebug() << "ProcessRequest";
 		QProcessRequestEventArgs args = QProcessRequestEventArgs(QString::fromStdWString(request->GetURL().c_str()));
-		ResourceHandler_.ProcessRequest(args);
+		ResourceHandler_->ProcessRequest(args);
 		if (args.UseContinue) {
 			callback->Continue();
 		}
@@ -36,7 +34,7 @@ public:
 		CefString& redirectUrl) OVERRIDE {
 		qDebug() << "GetResponseHeaders";
 		QGetResponseHeadersEventArgs args = QGetResponseHeadersEventArgs(url_);
-		ResourceHandler_.GetResponseHeaders(args);
+		ResourceHandler_->GetResponseHeaders(args);
 		if ("" != args.MimeType)
 		{
 			response->SetMimeType(CefString(args.MimeType.toStdWString()));
@@ -65,7 +63,7 @@ public:
 		
 		qDebug() << "ReadResponse:"<<url_; 
 		QReadResponseEventArgs args = QReadResponseEventArgs(url_);
-		ResourceHandler_.ReadResponse(args);
+		ResourceHandler_->ReadResponse(args);
 
 		if (args.UseContinue) {
 			callback->Continue();
@@ -76,9 +74,9 @@ public:
 		}
 		if (args.ReturnValue)
 		{
-			int length = args.Bytes_Read;
+			int length = args.Data_Out.length();
 			bytes_read = length;
-			memcpy(data_out, args.Data_Out, bytes_read);
+			memcpy(data_out, args.Data_Out.constData(), bytes_read);
 			return true;
 		}
 		return false;
@@ -90,7 +88,7 @@ public:
 
 
 private:
-	QCefGetResourceHandler& ResourceHandler_ = QCefGetResourceHandler();
+	QCefGetResourceHandler* ResourceHandler_;
 	QString url_;
 
 	IMPLEMENT_REFCOUNTING(QCefResourceHandler);

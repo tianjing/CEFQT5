@@ -97,7 +97,9 @@ private:
 	{
 		if (agent != NULL)
 		{
+			qDebug() << "AddListenerCallback11111111111";
 			_agents.push_back(agent);
+			qDebug() << "2222222222222";
 		}
 	}
 
@@ -163,7 +165,6 @@ public:
 		_pListener = (IListener*)_pObserver;
 		_pObserverDelegate = d;
 		_pEvent = NULL;
-
 		/*Register itself to CListener,*/
 		_pListener->AddListenerCallback((IDispose*)this);
 	}
@@ -239,22 +240,22 @@ public:
 	/*Default destructor*/
 	virtual ~CEvent()
 	{
-		qDebug() << "~CEvent()";
+		qDebug() << "~CEvent():"<< typeid(this).name();
 		list<Listener>::iterator it, end;
 
 		Listener temp;
+		if (_listeners.size() > 0) {
+			it = _listeners.begin();
+			end = _listeners.end();
 
-		it = _listeners.begin();
-		end = _listeners.end();
+			for (it; it != end;)
+			{
+				temp = *it;
+				it++;
 
-		for (it; it != end;)
-		{
-			temp = *it;
-			it++;
-
-			((IDispose*)temp)->Dispose();
+				((IDispose*)temp)->Dispose();
+			}
 		}
-
 		_listeners.clear();
 		_staticListeners.clear();
 	}
@@ -267,24 +268,27 @@ public:
 	void operator=(CEvent& cevent)
 	{
 		list<Listener>::iterator  it, end;
-		
-		it = cevent._listeners.begin();
-		end = cevent._listeners.end();
-		
-		for (it; it != end; it++)
-		{
-			this->Subscribe(*it);
+		if (cevent._listeners.size() > 0) {
+			it = cevent._listeners.begin();
+			end = cevent._listeners.end();
+
+			for (it; it != end; it++)
+			{
+				this->Subscribe(*it);
+			}
 		}
 		cevent._listeners.clear();
+		if (cevent._staticListeners.size() > 0) {
+			list<StaticListener>::iterator  it1, end1;
+			it1 = cevent._staticListeners.begin();
+			end1 = cevent._staticListeners.end();
 
-		list<StaticListener>::iterator  it1, end1;
-		it1 = cevent._staticListeners.begin();
-		end1 = cevent._staticListeners.end();
-
-		for (it1; it1 != end1; it1++)
-		{
-			this->Subscribe(*it1);
+			for (it1; it1 != end1; it1++)
+			{
+				this->Subscribe(*it1);
+			}
 		}
+		cevent._staticListeners.clear();
 	}
 	/*Subscribe global or static listener*/
 	void operator+=(const StaticListener listener)

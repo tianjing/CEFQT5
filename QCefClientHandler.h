@@ -1,13 +1,14 @@
 #pragma once
 
 #include "qcefmessageevent.h"
-#include "qcefresourceevent.h"
-#include "QHandlers\QCetRequestHandler.h"
+#include "QHandlers\QCefRequestHandler.h"
+#include "QHandlers\QCefDisplayHandler.h"
+#include "QHandlers\QCefLifeSpanHandler.h"
 class QCefWebView_EXPORT QCefClientHandler :
 	public CefClient,
 	public CefDisplayHandler,
 	public CefLifeSpanHandler,
-	public CefLoadHandler,
+	public CefLoadHandler, 
 	public CefRequestHandler
 {
 public:
@@ -16,13 +17,12 @@ public:
 	public:
 		virtual ~Listener() {};
 
-		virtual void OnAddressChange(const QString & url) = 0;
-		virtual void OnTitleChange(const QString & title) = 0;
 		virtual void SetLoading(bool isLoading) = 0;
 		virtual void SetNavState(bool canGoBack, bool canGoForward) = 0;
-		virtual void OnAfterCreated() = 0;
 		virtual void OnMessageEvent(QCefMessageEvent * e) = 0;
-		virtual QCetRequestHandler& RequestHandler()=0;
+		virtual QCefRequestHandler& RequestHandler()=0;
+		virtual QCefDisplayHandler& DisplayHandler()= 0;
+		virtual QCefLifeSpanHandler& LifeSpanHandler() = 0;
 	};
 
 	QCefClientHandler();
@@ -50,7 +50,7 @@ public:
 		if (listener_)
 		{
 			QString url = QString::fromStdWString(request->GetURL().ToWString());
-			QGetResourceEventArgs args =QGetResourceEventArgs(url);
+			QGefResourceEventArgs args =QGefResourceEventArgs(url);
 
 			listener_->RequestHandler().GetResource(args);
 			if (args.UseHandler)
@@ -64,16 +64,29 @@ public:
 	}
 // overridden methods
 public:
-	virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
-	virtual bool DoClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
-	virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
+	virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;//CefLifeSpanHandler
+	virtual bool DoClose(CefRefPtr<CefBrowser> browser) OVERRIDE;//CefLifeSpanHandler
+	virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) OVERRIDE;//CefLifeSpanHandler
 	virtual void OnLoadError(CefRefPtr<CefBrowser> browser,
 							 CefRefPtr<CefFrame> frame,
 							 ErrorCode errorCode,
 							 const CefString& errorText,
-							 const CefString& failedUrl) OVERRIDE;
+							 const CefString& failedUrl) OVERRIDE;//CefLoadHandler
 	
 	void CloseAllBrowsers(bool force_close);
+
+	virtual void OnAddressChange(CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		const CefString& url) {
+		QAddressChangeEventArgs args = QAddressChangeEventArgs(QString::fromStdWString(url.ToWString()));
+		listener_->DisplayHandler().AddressChangeEvent(args);
+	}
+
+	virtual void OnTitleChange(CefRefPtr<CefBrowser> browser,
+		const CefString& title) {
+		QTitleChangeEventArgs args = QTitleChangeEventArgs(QString::fromStdWString(title.ToWString()));
+		listener_->DisplayHandler().TitleChangeEvent(args);
+	}
 
 // getters and setters
 public:

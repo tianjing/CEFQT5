@@ -15,7 +15,7 @@ QCefWebView::QCefWebView(QWidget *parent) :
 {
 	setAttribute(Qt::WA_NativeWindow, true);
 	setAttribute(Qt::WA_DontCreateNativeAncestors, true);
-	requesthandler_ = QCetRequestHandler();
+	lifeSpanHandler_.AfterCreatedEvent+= new CListenerAgent<QCefWebView, CEventArgs&>(this, &QCefWebView::OnAfterCreated);
 	qDebug() << "fdasfdsa";
 
 }
@@ -146,18 +146,6 @@ void QCefWebView::customEvent(QEvent* e)
 	//}
 }
 
-void QCefWebView::OnAddressChange(const QString& url)
-{
-	qDebug() << "OnAddressChange";
-	emit urlChanged(QUrl(url));
-}
-
-void QCefWebView::OnTitleChange(const QString& title)
-{
-	qDebug() << "OnTitleChange";
-	emit titleChanged(title);
-}
-
 void QCefWebView::SetLoading(bool isLoading)
 {
 	if (isLoading) {
@@ -180,7 +168,7 @@ void QCefWebView::SetNavState(bool canGoBack, bool canGoForward)
 	emit navStateChanged(canGoBack, canGoForward);
 }
 
-void QCefWebView::OnAfterCreated()
+void QCefWebView::OnAfterCreated(CEventArgs& args)
 {
 	browserState_ = kCreated;
 	if (needResize_) {
@@ -282,8 +270,4 @@ bool QCefWebView::BrowserLoadUrl(const QUrl& url)
 		return true;
 	}
 	return false;
-}
-QCetRequestHandler& QCefWebView::RequestHandler()
-{
-	return requesthandler_;
 }

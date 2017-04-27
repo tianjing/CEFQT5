@@ -61,6 +61,9 @@
     <ClInclude Include="GeneratedFiles\ui_example.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="MysGetResourceHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="example.h">

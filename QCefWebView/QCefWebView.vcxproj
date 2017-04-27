@@ -136,7 +136,9 @@
     </CustomBuild>
     <ClInclude Include="..\QCefResourceEvent.h" />
     <ClInclude Include="..\QCefResourceHandler.h" />
-    <ClInclude Include="..\QHandlers\QCetRequestHandler.h" />
+    <ClInclude Include="..\QHandlers\QCefLifeSpanHandler.h" />
+    <ClInclude Include="..\QHandlers\QCefDisplayHandler.h" />
+    <ClInclude Include="..\QHandlers\QCefRequestHandler.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
