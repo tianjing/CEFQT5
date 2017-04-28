@@ -15,6 +15,8 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMdiArea>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -25,9 +27,12 @@ QT_BEGIN_NAMESPACE
 class Ui_ExampleClass
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
+    QAction *action_2;
     QWidget *centralWidget;
+    QMdiArea *mdiArea;
+    QMenuBar *menuBar;
+    QMenu *menu;
+    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *ExampleClass)
@@ -35,18 +40,32 @@ public:
         if (ExampleClass->objectName().isEmpty())
             ExampleClass->setObjectName(QStringLiteral("ExampleClass"));
         ExampleClass->resize(600, 400);
+        action_2 = new QAction(ExampleClass);
+        action_2->setObjectName(QStringLiteral("action_2"));
+        centralWidget = new QWidget(ExampleClass);
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        mdiArea = new QMdiArea(centralWidget);
+        mdiArea->setObjectName(QStringLiteral("mdiArea"));
+        mdiArea->setGeometry(QRect(50, 30, 511, 301));
+        mdiArea->setFrameShape(QFrame::NoFrame);
+        mdiArea->setViewMode(QMdiArea::SubWindowView);
+        ExampleClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ExampleClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 600, 23));
+        menu = new QMenu(menuBar);
+        menu->setObjectName(QStringLiteral("menu"));
         ExampleClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(ExampleClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        ExampleClass->addToolBar(mainToolBar);
-        centralWidget = new QWidget(ExampleClass);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        ExampleClass->setCentralWidget(centralWidget);
+        ExampleClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(ExampleClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         ExampleClass->setStatusBar(statusBar);
+
+        menuBar->addAction(menu->menuAction());
+        menu->addSeparator();
+        menu->addAction(action_2);
 
         retranslateUi(ExampleClass);
 
@@ -56,6 +75,8 @@ public:
     void retranslateUi(QMainWindow *ExampleClass)
     {
         ExampleClass->setWindowTitle(QApplication::translate("ExampleClass", "Example", Q_NULLPTR));
+        action_2->setText(QApplication::translate("ExampleClass", "\346\211\223\345\274\200\347\231\276\345\272\246", Q_NULLPTR));
+        menu->setTitle(QApplication::translate("ExampleClass", "\346\226\260\346\265\217\350\247\210\345\231\250", Q_NULLPTR));
     } // retranslateUi
 
 };

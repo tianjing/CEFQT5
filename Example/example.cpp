@@ -2,10 +2,12 @@
 #include "example.h"
 #include "QCefClient.h"
 #include "MysGetResourceHandler.h"
+#include <QtWidgets/QMdiArea.h>
 Example::Example(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	
 	SetupUi();
 }
 
@@ -13,20 +15,29 @@ Example::~Example()
 {
 
 }
-QString url = "http://localhost:8080/EmptyProject/platform/login.jsp";
 void Example::SetupUi() {
 	webview_ = new QCefWebView(this);
-	webview_->load(QUrl(url));
+	webview_->load(QUrl(DefaultUrl_));
 	CListenerAgent<Example, QGefResourceEventArgs&>* agent = new CListenerAgent<Example, QGefResourceEventArgs&>(this, &Example::OnGetResource);
 	webview_->RequestHandler().GetResourceEvent += agent;
 	this->setCentralWidget(webview_);
+	
+	connect (ui.action_2, SIGNAL(triggered(bool)),this ,SLOT(action_2_triggered(bool)) );
+
 }
 void Example::OnGetResource(QGefResourceEventArgs& args)
 {
 	qDebug() << "OnGetResource:"<< args.URL;
-	if (args.URL == url)
+	if (args.URL == "")
 	{
 		args.UseHandler = true;
 		args.setResourceHandler(new MysGetResourceHandler());
 	}
+}
+void Example::action_2_triggered(bool is)
+{
+	Example * window = new Example();
+	window->resize(1024, 768);
+	window->DefaultUrl_ = "http://www.mydrivers.com";
+	window->show();
 }

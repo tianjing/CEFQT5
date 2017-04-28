@@ -97,9 +97,7 @@ private:
 	{
 		if (agent != NULL)
 		{
-			qDebug() << "AddListenerCallback11111111111";
 			_agents.push_back(agent);
-			qDebug() << "2222222222222";
 		}
 	}
 

@@ -3,7 +3,8 @@
 #include "QCefClientHandler.h"
 #include "qcefmessageevent.h"
 #include <QDebug>
-extern CefRefPtr<QCefClientHandler> g_handler;
+//extern CefRefPtr<QCefClientHandler> g_handler;
+
 
 const QString QCefWebView::kUrlBlank = "http://www.baidu.com";
 
@@ -119,7 +120,7 @@ void QCefWebView::resizeEvent(QResizeEvent* e)
 
 void QCefWebView::closeEvent(QCloseEvent* e)
 {
-	if (auto handlerInstance = g_handler) {
+	if (auto handlerInstance = g_handler1) {
 		if (handlerInstance->IsClosing()) {
 			auto browser = handlerInstance->GetBrowser();
 			if (browser.get()) {
@@ -133,6 +134,7 @@ void QCefWebView::closeEvent(QCloseEvent* e)
 void QCefWebView::showEvent(QShowEvent* /* e */)
 {
 	CreateBrowser(size());
+	browserState_ = kCreated;
 }
 
 void QCefWebView::customEvent(QEvent* e)
@@ -210,11 +212,11 @@ bool QCefWebView::CreateBrowser(const QSize& size)
 #error Implement getting window handler for other OSes!
 #endif
 
-	g_handler->setListener(this);
+	g_handler1->setListener(this);
 
 	QString url = url_.isEmpty() ? kUrlBlank : url_.toString();
 	CefBrowserHost::CreateBrowser(windowInfo,
-								  g_handler.get(),
+								  g_handler1,
 								  CefString(url.toStdWString()),
 								  browserSettings,
 								  nullptr);
@@ -228,8 +230,8 @@ bool QCefWebView::CreateBrowser(const QSize& size)
 CefRefPtr<CefBrowser> QCefWebView::GetBrowser() const
 {
 	CefRefPtr<CefBrowser> browser = nullptr;
-	if (g_handler.get()) {
-		browser = g_handler->GetBrowser();
+	if (g_handler1) {
+		browser = g_handler1->GetBrowser();
 	}
 
 	return browser;
@@ -237,10 +239,10 @@ CefRefPtr<CefBrowser> QCefWebView::GetBrowser() const
 
 void QCefWebView::ResizeBrowser(const QSize& size)
 {
-	if (g_handler.get()) {
-		if (g_handler->GetBrowser()) {
+	if (g_handler1) {
+		if (g_handler1->GetBrowser()) {
 			auto windowHandle = 
-				g_handler->GetBrowser()->GetHost()->GetWindowHandle();
+				g_handler1->GetBrowser()->GetHost()->GetWindowHandle();
 
 			if (windowHandle) {
 #ifdef _WIN32

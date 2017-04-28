@@ -78,7 +78,7 @@ private:
 	bool needLoad_;
 	QUrl url_;
 	QMutex mutex_;
-
+	QCefClientHandler* g_handler1 = new QCefClientHandler();
 	Q_DISABLE_COPY(QCefWebView);
 };
 

@@ -49,9 +49,11 @@ int main(int argc, char *argv[])
 		w.show();
 
 		int qt_exit_code = a.exec();
-
+		a.exit(0);
+		try{
 		QCefQuit();
-
+		}
+		catch (...) {}
 		return qt_exit_code;
 	}
 }
