@@ -12,8 +12,8 @@ namespace
 		std::string cache_path = AppGetWorkingDirectory().toStdString() + "/.cache";
 		CefString(&settings.cache_path) = CefString(cache_path);
 
-		//settings.log_severity = LOGSEVERITY_DISABLE;
-		//settings.multi_threaded_message_loop = false;
+		settings.log_severity = LOGSEVERITY_DISABLE;
+
 		settings.no_sandbox = true;
 		std::string resources_dir_path = AppGetWorkingDirectory().toStdString() + "/CefResources";
 		CefString(&settings.resources_dir_path) = CefString(resources_dir_path);
