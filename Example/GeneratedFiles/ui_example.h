@@ -29,6 +29,7 @@ class Ui_ExampleClass
 public:
     QAction *action_2;
     QAction *action_test;
+    QAction *action_framejs;
     QWidget *centralWidget;
     QMdiArea *mdiArea;
     QMenuBar *menuBar;
@@ -46,6 +47,8 @@ public:
         action_2->setObjectName(QStringLiteral("action_2"));
         action_test = new QAction(ExampleClass);
         action_test->setObjectName(QStringLiteral("action_test"));
+        action_framejs = new QAction(ExampleClass);
+        action_framejs->setObjectName(QStringLiteral("action_framejs"));
         centralWidget = new QWidget(ExampleClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         mdiArea = new QMdiArea(centralWidget);
@@ -74,6 +77,7 @@ public:
         menu->addSeparator();
         menu->addAction(action_2);
         menuJs->addAction(action_test);
+        menuJs->addAction(action_framejs);
 
         retranslateUi(ExampleClass);
 
@@ -85,6 +89,7 @@ public:
         ExampleClass->setWindowTitle(QApplication::translate("ExampleClass", "Example", Q_NULLPTR));
         action_2->setText(QApplication::translate("ExampleClass", "\346\211\223\345\274\200\347\231\276\345\272\246", Q_NULLPTR));
         action_test->setText(QApplication::translate("ExampleClass", "\350\260\203\347\224\250test", Q_NULLPTR));
+        action_framejs->setText(QApplication::translate("ExampleClass", "\350\260\203\347\224\250framejs", Q_NULLPTR));
         menu->setTitle(QApplication::translate("ExampleClass", "\346\226\260\346\265\217\350\247\210\345\231\250", Q_NULLPTR));
         menuJs->setTitle(QApplication::translate("ExampleClass", "js", Q_NULLPTR));
     } // retranslateUi

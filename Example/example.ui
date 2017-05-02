@@ -52,6 +52,7 @@
      <string>js</string>
     </property>
     <addaction name="action_test"/>
+    <addaction name="action_framejs"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuJs"/>
@@ -73,6 +74,11 @@
   <action name="action_test">
    <property name="text">
     <string>调用test</string>
+   </property>
+  </action>
+  <action name="action_framejs">
+   <property name="text">
+    <string>调用framejs</string>
    </property>
   </action>
  </widget>

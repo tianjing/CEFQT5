@@ -39,14 +39,37 @@ public:
 		return lifeSpanHandler_;
 	}
 
-
+	virtual void ExecuteJavaScript(QString p_FrameName, QString p_Code) {
+		CefRefPtr<CefFrame> frame = NULL;
+		if (p_FrameName.size()>0) {
+			frame = GetBrowser()->GetFrame(CefString(p_FrameName.toStdWString().c_str()));
+		}
+		else {
+			frame = GetBrowser()->GetFrame(CefString(""));
+		}
+		if (frame)
+		{
+			CefString code = CefString(p_Code.toStdWString());
+			CefString url = CefString("");
+			frame->ExecuteJavaScript(code, url, 0);
+		}
+	}
 	virtual void ExecuteJavaScript(QString p_Code)  {
-		CefString code = CefString(p_Code.toStdWString());
-		CefString url = CefString("");
-		GetBrowser()->GetMainFrame()->ExecuteJavaScript(code, url,0);
-
+		ExecuteJavaScript("", p_Code);
 	}
 
+	virtual void GetFrameNames(std::vector<QString>& p_Names) {
+		std::vector<QString> result;
+		std::vector<CefString> names;
+		GetBrowser()->GetFrameNames(names);
+		std::vector<CefString>::iterator begin, end;
+		begin=names.begin();
+		end = names.end();
+		for (; begin != end; ++begin) {
+			p_Names.push_back(QString::fromStdWString(begin->ToWString()));
+		}
+
+	}
 
 protected:
 	virtual void resizeEvent(QResizeEvent * event) override;

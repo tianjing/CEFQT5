@@ -4,25 +4,25 @@
 #include <iostream>
 #include "QCefClient.h"
 #include "qcefwebview.h"
-bool IsSubprocess(int & argc, char ** argv)
-{
-	std::vector<std::string> argVector(argv, argv + argc);
-
-	for (auto i = 0; i < argc; ++i) {
-		if (argVector[i].find("--type") != std::string::npos) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-int RunCefSubprocess(int & argc, char ** argv)
-{
-	CefMainArgs cefMainArgs(GetModuleHandle(nullptr));
-
-	return CefExecuteProcess(cefMainArgs, nullptr, nullptr);
-}
+//bool IsSubprocess(int & argc, char ** argv)
+//{
+//	std::vector<std::string> argVector(argv, argv + argc);
+//
+//	for (auto i = 0; i < argc; ++i) {
+//		if (argVector[i].find("--type") != std::string::npos) {
+//			return true;
+//		}
+//	}
+//
+//	return false;
+//}
+//
+//int RunCefSubprocess(int & argc, char ** argv)
+//{
+//	CefMainArgs cefMainArgs(GetModuleHandle(nullptr));
+//
+//	return CefExecuteProcess(cefMainArgs, nullptr, nullptr);
+//}
 
 
 int main(int argc, char *argv[])

@@ -24,7 +24,7 @@ void Example::SetupUi() {
 	
 	connect (ui.action_2, SIGNAL(triggered(bool)),this ,SLOT(action_2_triggered(bool)) );
 	connect(ui.action_test, SIGNAL(triggered(bool)), this, SLOT(action_jstest_triggered(bool)));
-
+	connect(ui.action_framejs, SIGNAL(triggered(bool)), this, SLOT(action_framejs_triggered(bool)));
 }
 void Example::OnGetResource(QGefResourceEventArgs& args)
 {
@@ -44,5 +44,10 @@ void Example::action_2_triggered(bool is)
 
 void Example::action_jstest_triggered(bool is)
 {
-	webview_->ExecuteJavaScript("test();");
+	webview_->ExecuteJavaScript(QString("testindex();"));
+}
+
+void Example::action_framejs_triggered(bool is)
+{
+	webview_->ExecuteJavaScript(QString("fdafdas"),QString("test();"));
 }
