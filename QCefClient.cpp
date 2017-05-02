@@ -12,8 +12,8 @@ namespace
 		std::string cache_path = AppGetWorkingDirectory().toStdString() + "/.cache";
 		CefString(&settings.cache_path) = CefString(cache_path);
 
-		settings.log_severity = LOGSEVERITY_DISABLE;
-
+		//settings.log_severity = LOGSEVERITY_DISABLE;
+		//settings.multi_threaded_message_loop = false;
 		settings.no_sandbox = true;
 		std::string resources_dir_path = AppGetWorkingDirectory().toStdString() + "/CefResources";
 		CefString(&settings.resources_dir_path) = CefString(resources_dir_path);
@@ -22,7 +22,7 @@ namespace
 	}
 }
 
-CefRefPtr<QCefClientHandler> g_handler;
+//CefRefPtr<QCefClientHandler> g_handler;
 
 int QCefInit(int& argc, char** argv)
 {
@@ -40,17 +40,15 @@ int QCefInit(int& argc, char** argv)
 	QCefInitSettings(settings);
 
 	CefInitialize(mainArgs, settings, app, nullptr);
-
-	g_handler = new QCefClientHandler();
+	//g_handler = new QCefClientHandler();
 
 	return -1;
 }
 
 void QCefQuit()
 {
-	try{
+	//CefQuitMessageLoop();
 	CefShutdown();
-	}catch(...){}
 }
 
 QString AppGetWorkingDirectory()

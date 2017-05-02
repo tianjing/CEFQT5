@@ -8,7 +8,7 @@
 #include "QHandlers\QCefLifeSpanHandler.h"
 class QCefWebView_EXPORT QCefWebView :
 	public QWidget,
-	public QCefClientHandler::Listener, public CListener
+	public QCefClientHandler::Listener
 {
 	Q_OBJECT
 
@@ -39,6 +39,13 @@ public:
 		return lifeSpanHandler_;
 	}
 
+
+	virtual void ExecuteJavaScript(QString p_Code)  {
+		CefString code = CefString(p_Code.toStdWString());
+		CefString url = CefString("");
+		GetBrowser()->GetMainFrame()->ExecuteJavaScript(code, url,0);
+
+	}
 public slots:
 	void back();
 	void forward();
@@ -58,10 +65,8 @@ protected:
 	virtual void showEvent(QShowEvent * event) override;
 	virtual void customEvent(QEvent * event) override;
 
-	virtual void SetLoading(bool isLoading) override;
-	virtual void SetNavState(bool canGoBack, bool canGoForward) override;
 	virtual void OnAfterCreated(CEventArgs&);
-	virtual void OnMessageEvent(QCefMessageEvent * e) override;
+
 
 private:
 	void SetupUi();

@@ -28,11 +28,11 @@ int RunCefSubprocess(int & argc, char ** argv)
 int main(int argc, char *argv[])
 {
 	
-	if (IsSubprocess(argc, argv)) {
-		std::cout << "subprocess" << std::endl;
-		return RunCefSubprocess(argc, argv);
-	}
-	else {
+	//if (IsSubprocess(argc, argv)) {
+	//	std::cout << "subprocess" << std::endl;
+	//	return RunCefSubprocess(argc, argv);
+	//}
+	//else {
 		QApplication a(argc, argv);
 
 		int result = QCefInit(argc, argv);
@@ -43,17 +43,16 @@ int main(int argc, char *argv[])
 		Example w;
 		w.resize(1024, 768);
 
-		//QCefWebView * cefWebView = new QCefWebView(&w);
-		//w.setCentralWidget(cefWebView);
 
 		w.show();
-
-		int qt_exit_code = a.exec();
-		a.exit(0);
-		try{
+		int qt_exit_code = 0;
+		try {
+		qt_exit_code = a.exec();
+		//a.exit(0);
+		
 		QCefQuit();
 		}
 		catch (...) {}
 		return qt_exit_code;
-	}
+	//}
 }

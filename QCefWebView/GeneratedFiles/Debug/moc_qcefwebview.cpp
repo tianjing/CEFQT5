@@ -173,8 +173,6 @@ void *QCefWebView::qt_metacast(const char *_clname)
         return static_cast<void*>(const_cast< QCefWebView*>(this));
     if (!strcmp(_clname, "QCefClientHandler::Listener"))
         return static_cast< QCefClientHandler::Listener*>(const_cast< QCefWebView*>(this));
-    if (!strcmp(_clname, "CListener"))
-        return static_cast< CListener*>(const_cast< QCefWebView*>(this));
     return QWidget::qt_metacast(_clname);
 }
 

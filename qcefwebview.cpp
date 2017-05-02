@@ -3,8 +3,6 @@
 #include "QCefClientHandler.h"
 #include "qcefmessageevent.h"
 #include <QDebug>
-//extern CefRefPtr<QCefClientHandler> g_handler;
-
 
 const QString QCefWebView::kUrlBlank = "http://www.baidu.com";
 
@@ -14,8 +12,10 @@ QCefWebView::QCefWebView(QWidget *parent) :
 	needResize_(false),
 	needLoad_(false)
 {
-	setAttribute(Qt::WA_NativeWindow, true);
-	setAttribute(Qt::WA_DontCreateNativeAncestors, true);
+	setAttribute(Qt::WA_DeleteOnClose);
+	//下面的属性影响Cef释放
+	//setAttribute(Qt::WA_NativeWindow, true);
+	//setAttribute(Qt::WA_DontCreateNativeAncestors, true);
 	lifeSpanHandler_.AfterCreatedEvent+= new CListenerAgent<QCefWebView, CEventArgs&>(this, &QCefWebView::OnAfterCreated);
 	qDebug() << "fdasfdsa";
 
@@ -23,7 +23,8 @@ QCefWebView::QCefWebView(QWidget *parent) :
 
 QCefWebView::~QCefWebView()
 {
-	// empty destructor
+
+	
 }
 
 void QCefWebView::load(const QUrl& url)
@@ -128,6 +129,7 @@ void QCefWebView::closeEvent(QCloseEvent* e)
 			}
 		}
 	}
+	
 	e->accept();
 }
 
@@ -139,36 +141,15 @@ void QCefWebView::showEvent(QShowEvent* /* e */)
 
 void QCefWebView::customEvent(QEvent* e)
 {
-	//if (e->type() == QCefMessageEvent::MessageEventType) {
-	//	QCefMessageEvent * event = dynamic_cast<QCefMessageEvent*>(e);
-	//	QString name = event->name();
-	//	QVariantList args = event->args();
+	if (e->type() == QCefMessageEvent::MessageEventType) {
+		QCefMessageEvent * event = dynamic_cast<QCefMessageEvent*>(e);
+		QString name = event->name();
+		QVariantList args = event->args();
 
-	//	// TODO: emit something
-	//}
-}
-
-void QCefWebView::SetLoading(bool isLoading)
-{
-	if (isLoading) {
-		if (!needLoad_ && !url_.isEmpty()) {
-			emit loadStarted();
-		}
-		else {
-			if (needLoad_) {
-				needLoad_ = false;
-			}
-			else if (!url_.isEmpty()) {
-				emit loadFinished(true);
-			}
-		}
+		// TODO: emit something
 	}
 }
 
-void QCefWebView::SetNavState(bool canGoBack, bool canGoForward)
-{
-	emit navStateChanged(canGoBack, canGoForward);
-}
 
 void QCefWebView::OnAfterCreated(CEventArgs& args)
 {
@@ -177,12 +158,6 @@ void QCefWebView::OnAfterCreated(CEventArgs& args)
 		ResizeBrowser(size());
 		needResize_ = false;
 	}
-}
-
-void QCefWebView::OnMessageEvent(QCefMessageEvent* e)
-{
-	qDebug()<< e->name();
-	QCoreApplication::postEvent(this, e, Qt::HighEventPriority);
 }
 
 bool QCefWebView::CreateBrowser(const QSize& size)

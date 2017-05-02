@@ -17,10 +17,11 @@ public:
 
 public slots:
 	void action_2_triggered(bool is);
-	
+	void action_jstest_triggered(bool is);
 protected:
 	virtual void closeEvent(QCloseEvent *event) override {
-		webview_->close();
+		//webview_->close();
+		//webview_->~QCefWebView();
 	}
 private:
 	void SetupUi();

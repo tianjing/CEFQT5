@@ -7,13 +7,13 @@ Example::Example(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	
+	this->DefaultUrl_ = "file:///"+qApp->applicationDirPath()+ "/../www/index.html";
 	SetupUi();
 }
 
 Example::~Example()
 {
-
+	//webview_->~QCefWebView();
 }
 void Example::SetupUi() {
 	webview_ = new QCefWebView(this);
@@ -23,6 +23,7 @@ void Example::SetupUi() {
 	this->setCentralWidget(webview_);
 	
 	connect (ui.action_2, SIGNAL(triggered(bool)),this ,SLOT(action_2_triggered(bool)) );
+	connect(ui.action_test, SIGNAL(triggered(bool)), this, SLOT(action_jstest_triggered(bool)));
 
 }
 void Example::OnGetResource(QGefResourceEventArgs& args)
@@ -38,6 +39,11 @@ void Example::action_2_triggered(bool is)
 {
 	Example * window = new Example();
 	window->resize(1024, 768);
-	window->DefaultUrl_ = "http://www.mydrivers.com";
+	//window->DefaultUrl_ = "http://127.0.0.1:8080/EmptyProject/platform/login.jsp";
 	window->show();
+}
+
+void Example::action_jstest_triggered(bool is)
+{
+	webview_->ExecuteJavaScript("test();");
 }

@@ -47,7 +47,14 @@
     <addaction name="separator"/>
     <addaction name="action_2"/>
    </widget>
+   <widget class="QMenu" name="menuJs">
+    <property name="title">
+     <string>js</string>
+    </property>
+    <addaction name="action_test"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menuJs"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -61,6 +68,11 @@
   <action name="action_2">
    <property name="text">
     <string>打开百度</string>
+   </property>
+  </action>
+  <action name="action_test">
+   <property name="text">
+    <string>调用test</string>
    </property>
   </action>
  </widget>

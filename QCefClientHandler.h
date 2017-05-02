@@ -17,10 +17,6 @@ public:
 	{
 	public:
 		virtual ~Listener() {};
-
-		virtual void SetLoading(bool isLoading) = 0;
-		virtual void SetNavState(bool canGoBack, bool canGoForward) = 0;
-		virtual void OnMessageEvent(QCefMessageEvent * e) = 0;
 		virtual QCefRequestHandler& RequestHandler()=0;
 		virtual QCefDisplayHandler& DisplayHandler()= 0;
 		virtual QCefLifeSpanHandler& LifeSpanHandler() = 0;
@@ -63,6 +59,7 @@ public:
 		}
 		return NULL;
 	}
+
 // overridden methods
 public:
 	virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;//CefLifeSpanHandler
@@ -112,8 +109,6 @@ public:
 	}
 
 protected:
-	void SetLoading(bool isLoading);
-	void SetNavState(bool canGoBack, bool canGoForward);
 
 	// child browser window
 	CefRefPtr<CefBrowser> Browser_;
@@ -124,7 +119,7 @@ protected:
 
 	// Number of currently existing browser windows. The application will exit
 	// when the number of windows reaches 0.
-	static int browserCount_;
+	int browserCount_=0;
 
 private:
 	//typedef std::list<CefRefPtr<CefBrowser>> BrowserList;

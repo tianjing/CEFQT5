@@ -12,6 +12,13 @@ public:
 
 	// CefBrowserProcessHandler methods:
 	virtual void OnContextInitialized() OVERRIDE;
+
+	virtual void OnBeforeCommandLineProcessing(
+		const CefString& process_type,
+		CefRefPtr<CefCommandLine> command_line) OVERRIDE{
+		//command_line->AppendSwitch("process-per-site");
+		//command_line->AppendSwitch("single-process");
+	}
 private:
 	IMPLEMENT_REFCOUNTING(QCefClientApp);
 };

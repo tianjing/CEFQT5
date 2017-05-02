@@ -2,7 +2,7 @@
 #include "QCefClientHandler.h"
 #include "qcefmessageevent.h"
 #include <QDebug>
-int QCefClientHandler::browserCount_ = 0;
+//int QCefClientHandler::browserCount_ = 0;
 
 QCefClientHandler::QCefClientHandler() :
 	isClosing_(false),
@@ -15,10 +15,12 @@ QCefClientHandler::QCefClientHandler() :
 
 QCefClientHandler::~QCefClientHandler()
 {
+	qDebug() << "~QCefClientHandler()";
 }
 
 void QCefClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
+
 	CEF_REQUIRE_UI_THREAD();
 
 	if (!browser_.get()) {
@@ -39,6 +41,7 @@ void QCefClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 
 bool QCefClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
 {
+	qDebug() << "DoClose()";
 	CEF_REQUIRE_UI_THREAD();
 
 	// Closing the main window requires special handling. See the DoClose()
@@ -63,6 +66,7 @@ bool QCefClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
 
 void QCefClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
+	qDebug() << "OnBeforeClose()";
 	CEF_REQUIRE_UI_THREAD();
 
 	if (browserId_ == browser->GetIdentifier()) {
@@ -111,6 +115,7 @@ void QCefClientHandler::OnLoadError(CefRefPtr<CefBrowser> browser,
 
 void QCefClientHandler::CloseAllBrowsers(bool force_close)
 {
+	qDebug() << "CloseAllBrowsers()";
 	if (!CefCurrentlyOn(TID_UI)) {
 		// Execute on the UI thread.
 		CefPostTask(TID_UI,
