@@ -46,18 +46,7 @@ public:
 		GetBrowser()->GetMainFrame()->ExecuteJavaScript(code, url,0);
 
 	}
-public slots:
-	void back();
-	void forward();
-	void reload();
-	void stop();
 
-signals:
-	void titleChanged(const QString & title);
-	void urlChanged(const QUrl & url);
-	void loadStarted();
-	void loadFinished(bool ok);
-	void navStateChanged(bool canGoBack, bool canGoForward);
 
 protected:
 	virtual void resizeEvent(QResizeEvent * event) override;

@@ -16,7 +16,7 @@ QCefWebView::QCefWebView(QWidget *parent) :
 	//下面的属性影响Cef释放
 	//setAttribute(Qt::WA_NativeWindow, true);
 	//setAttribute(Qt::WA_DontCreateNativeAncestors, true);
-	lifeSpanHandler_.AfterCreatedEvent+= new CListenerAgent<QCefWebView, CEventArgs&>(this, &QCefWebView::OnAfterCreated);
+	SetupUi();
 	qDebug() << "fdasfdsa";
 
 }
@@ -26,7 +26,9 @@ QCefWebView::~QCefWebView()
 
 	
 }
-
+void QCefWebView::SetupUi() {
+	lifeSpanHandler_.AfterCreatedEvent += new CListenerAgent<QCefWebView, CEventArgs&>(this, &QCefWebView::OnAfterCreated);
+}
 void QCefWebView::load(const QUrl& url)
 {
 	url_ = url;
@@ -67,41 +69,6 @@ QUrl QCefWebView::url() const
 	return QUrl();
 }
 
-void QCefWebView::back()
-{
-	auto browser = GetBrowser();
-
-	if (browser.get()) {
-		browser->GoBack();
-	}
-}
-
-void QCefWebView::forward()
-{
-	auto browser = GetBrowser();
-
-	if (browser.get()) {
-		browser->GoForward();
-	}
-}
-
-void QCefWebView::reload()
-{
-	auto browser = GetBrowser();
-
-	if (browser.get()) {
-		browser->Reload();
-	}
-}
-
-void QCefWebView::stop()
-{
-	auto browser = GetBrowser();
-
-	if (browser.get()) {
-		browser->StopLoad();
-	}
-}
 
 void QCefWebView::resizeEvent(QResizeEvent* e)
 {
