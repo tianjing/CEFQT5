@@ -20,6 +20,14 @@ void Example::SetupUi() {
 	webview_->load(QUrl(DefaultUrl_));
 	CListenerAgent<Example, QGefResourceEventArgs&>* agent = new CListenerAgent<Example, QGefResourceEventArgs&>(this, &Example::OnGetResource);
 	webview_->RequestHandler().GetResourceEvent += agent;
+	
+	CListenerAgent<Example, QAddressChangeEventArgs&>* agent1 = new CListenerAgent<Example, QAddressChangeEventArgs&>(this, &Example::OnAddressChange);
+	webview_->DisplayHandler().AddressChangeEvent += agent1;
+
+	CListenerAgent<Example, QTitleChangeEventArgs&>* agent2 = new CListenerAgent<Example, QTitleChangeEventArgs&>(this, &Example::OnTitleChange);
+	webview_->DisplayHandler().TitleChangeEvent += agent2;
+
+	
 	this->setCentralWidget(webview_);
 	
 	connect (ui.action_2, SIGNAL(triggered(bool)),this ,SLOT(action_2_triggered(bool)) );
