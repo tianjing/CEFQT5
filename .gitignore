@@ -22,3 +22,12 @@ hs_err_pid*
 /Example.VC.db
 /Example.VC.VC.opendb
 /.vs/Example/v14/.suo
+/Example/GeneratedFiles/Release/moc_MessageBoxFromOtherThread.cpp
+/QCefWebView/GeneratedFiles/Release/moc_QCefWebView.cpp
+/Win32/Debug/debug.log
+/Win32/Release/.vs/Example/v14/.suo
+/Win32/Release/Example.ilk
+/Win32/Release/Example.pdb
+/Win32/Release/QCefWebView.ilk
+/Win32/Release/QCefWebView.pdb
+/Win32/Release/debug.log
