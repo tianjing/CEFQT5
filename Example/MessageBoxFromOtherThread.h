@@ -1,7 +1,7 @@
 #pragma once
 #include <QtCore>
 #include <QtWidgets>
-
+//http://blog.csdn.net/wsj18808050/article/details/43020563
 
 
 class MessageBoxFromOtherThread : public QObject
