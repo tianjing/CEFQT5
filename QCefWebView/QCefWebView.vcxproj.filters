@@ -110,6 +110,12 @@
     <ClInclude Include="..\QCefClientApp.h">
       <Filter>CEFHandlers</Filter>
     </ClInclude>
+    <ClInclude Include="..\QHandlers\QEntity.h">
+      <Filter>QHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\QHandlers\util.h">
+      <Filter>QHandlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qcefwebviewplugin.h">

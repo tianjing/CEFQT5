@@ -29,7 +29,7 @@ public:
 	void OnReadResponse(QReadResponseEventArgs& args) 
 	{
 		if (ReadResponsecount == 0) {
-			qDebug() << "OnGetResource:" << args.URL;
+			qDebug() << "OnReadResponse:" << args.URL;
 			std::string data = "<html><body><h1>Hello CEF</h1></body></html>";
 			void* datad;
 
@@ -43,15 +43,17 @@ public:
 		}
 	}
 	void  OnProcessRequest(QProcessRequestEventArgs& args)	{
-		args.UseContinue = true;
+		qDebug() << "OnProcessRequest:"<< args.Request->GetURL();
+		args.Callback->Continue();
 		args.ReturnValue = true;
 	}
 	void OnGetResponseHeaders(QGetResponseHeadersEventArgs& args)
 	{
+		qDebug() << "OnGetResponseHeaders()";
 		args.Response_Length = -1;
-		args.MimeType = "text/html";
-		args.Status = 200;
-
+		args.Response->SetMimeType("text/html");
+		args.Response->SetStatus(200);
+		
 	}
 
 

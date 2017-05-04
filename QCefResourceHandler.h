@@ -13,19 +13,14 @@ public:
 		ResourceHandler_ = const_cast<QCefGetResourceHandler*>(ResourceHandler);
 
 	};
-	virtual ~QCefResourceHandler() { qDebug() << "·¶µÂÈø·¢´ï"; };
+	virtual ~QCefResourceHandler() { qDebug() << "~QCefResourceHandler()"; };
 	virtual bool ProcessRequest(CefRefPtr<CefRequest> request,
 		CefRefPtr<CefCallback> callback)OVERRIDE {
 		qDebug() << "ProcessRequest";
-		QProcessRequestEventArgs args = QProcessRequestEventArgs(QString::fromStdWString(request->GetURL().c_str()));
+		
+		QProcessRequestEventArgs args = QProcessRequestEventArgs(new QCefRequest(request),new QCefCallback(callback));
+
 		ResourceHandler_->ProcessRequestEvent(args);
-		if (args.UseContinue) {
-			callback->Continue();
-		}
-		if (args.UseCancel)
-		{
-			callback->Cancel();
-		}
 		return args.ReturnValue;
 	};
 
@@ -34,27 +29,16 @@ public:
 		int64& response_length,
 		CefString& redirectUrl) OVERRIDE {
 		qDebug() << "GetResponseHeaders";
-		QGetResponseHeadersEventArgs args = QGetResponseHeadersEventArgs(url_);
+		QGetResponseHeadersEventArgs args = QGetResponseHeadersEventArgs(new QCefResponse(response));
 		ResourceHandler_->GetResponseHeadersEvent(args);
-		if ("" != args.MimeType)
-		{
-			response->SetMimeType(CefString(args.MimeType.toStdWString()));
-		}
-		if ("" != args.StatusText)
-		{
-			response->SetStatusText(CefString(args.StatusText.toStdWString()));
-		}
-		if (args.Status > 0)
-		{
-			response->SetStatus(args.Status);
-		}
+
 		if ("" != args.RedirectUrl)
 		{
 			redirectUrl = CefString(args.RedirectUrl.toStdWString());
 		}
 		response_length = args.Response_Length;
-
-
+		qDebug() << QCefUtil::ToString( response->GetMimeType());
+		qDebug() << response->GetStatus();
 	};
 
 	virtual bool ReadResponse(void* data_out,
@@ -63,16 +47,9 @@ public:
 		CefRefPtr<CefCallback> callback)OVERRIDE {
 		
 		qDebug() << "ReadResponse:"<<url_; 
-		QReadResponseEventArgs args = QReadResponseEventArgs(url_);
+		QReadResponseEventArgs args = QReadResponseEventArgs(new QCefCallback(callback));
 		ResourceHandler_->ReadResponseEvent(args);
 
-		if (args.UseContinue) {
-			callback->Continue();
-		}
-		if (args.UseCancel)
-		{
-			callback->Cancel();
-		}
 		if (args.ReturnValue)
 		{
 			QByteArray bytes = args.Data_Out;

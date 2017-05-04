@@ -138,6 +138,8 @@
     <ClInclude Include="..\QHandlers\QCefLifeSpanHandler.h" />
     <ClInclude Include="..\QHandlers\QCefDisplayHandler.h" />
     <ClInclude Include="..\QHandlers\QCefRequestHandler.h" />
+    <ClInclude Include="..\QHandlers\QEntity.h" />
+    <ClInclude Include="..\QHandlers\util.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

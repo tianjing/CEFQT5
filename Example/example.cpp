@@ -37,7 +37,7 @@ void Example::SetupUi() {
 void Example::OnGetResource(QGefResourceEventArgs& args)
 {
 	qDebug() << "OnGetResource:"<< args.URL;
-	if (args.URL == "")
+	if (args.URL != "")
 	{
 		args.UseHandler = true;
 		args.setResourceHandler(new MysGetResourceHandler());

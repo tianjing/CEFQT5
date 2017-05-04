@@ -1,43 +1,54 @@
 #pragma once
 #include "Delegate\DelegateExt.h"
+#include "QEntity.h"
 class QReadResponseEventArgs : public CEventArgs
 {
 public:
-	QReadResponseEventArgs(QString url) :CEventArgs(this) {
-		URL = url;
+	QReadResponseEventArgs(const QCefCallback* p_Callback) :CEventArgs(this) {
+		Callback = const_cast<QCefCallback*>(p_Callback);
 		Data_Out = NULL;
 		Bytes_To_Read = 0;
-		UseContinue = false;
-		UseCancel = false; 
+
 	}
-	~QReadResponseEventArgs() {}
+	~QReadResponseEventArgs() {
+		qDebug() << "~QReadResponseEventArgs()";
+	}
 	QString URL;
 	QByteArray Data_Out; int Bytes_To_Read;
-	bool UseContinue; bool UseCancel; bool ReturnValue;
+	bool ReturnValue;
+	QCefCallback* Callback;
  };
 
 class QProcessRequestEventArgs : public CEventArgs
 {
 public:
-	QProcessRequestEventArgs(QString url) :CEventArgs(this) {
-		URL = url;
-
-		UseContinue = false;
-		UseCancel = false;
+	QProcessRequestEventArgs(const QCefRequest* p_QRequest, const QCefCallback* p_QCefCallback) :CEventArgs(this) {
+		Callback = const_cast<QCefCallback*>(p_QCefCallback);
+		Request = const_cast<QCefRequest*>(p_QRequest);
+		ReturnValue = false;
 	}
-	~QProcessRequestEventArgs() {}
-	QString URL;
-	bool ReturnValue; bool UseContinue; bool UseCancel;
+
+	~QProcessRequestEventArgs() {
+		qDebug() << "~QProcessRequestEventArgs()";
+	}
+	bool ReturnValue;
+	QCefRequest* Request;
+	QCefCallback* Callback;
 };
 class QGetResponseHeadersEventArgs : public CEventArgs
 {
 public:
-	QGetResponseHeadersEventArgs(QString url) :CEventArgs(this) {
-		URL = url;
+	QGetResponseHeadersEventArgs(const QCefResponse* p_Response) :CEventArgs(this)
+	{
+		Response = const_cast<QCefResponse*>(p_Response);
 	}
-	~QGetResponseHeadersEventArgs() {}
-	QString URL; QString RedirectUrl; QString StatusText; QString MimeType;
-	qint64 Response_Length; int Status;
+
+	~QGetResponseHeadersEventArgs() {
+		qDebug() << "~QGetResponseHeadersEventArgs()";
+	}
+	QString RedirectUrl;
+	qint64 Response_Length; 
+	QCefResponse* Response;
 };
  class QCefGetResourceHandler :public CListener {
  public :
@@ -63,7 +74,7 @@ public:
 		 UseHandler = false;
 	 }
 	 ~QGefResourceEventArgs() {
-		 qDebug() << "~QGetResourceEventArgs";
+		 qDebug() << "~QGetResourceEventArgs()";
 	 }
 	 QString URL; bool UseHandler = false; const QCefGetResourceHandler* ResourceHandler;
 
